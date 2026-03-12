@@ -112,10 +112,11 @@ elif source_type == 'video' or source_type == 'usb':
 elif source_type == 'picamera':
     from picamera2 import Picamera2
     cap = Picamera2()
-    cap.configure(cap.create_video_configuration(main={"format": 'XRGB8888', "size": (resW, resH)}))
-    config["controls"] = {"AfMode: 2"}
+    config = cap.create_video_configuration(main={"format": 'XRGB8888', "size": (resW, resH)})
+    config["controls"] = {"AfMode": 2}
+    cap.configure(config)
     cap.start()
-    cap.set_controls({"AfTrigger: 1"})
+    cap.set_controls({"AfTrigger": 1})
 
 # Set bounding box colors (using the Tableu 10 color scheme)
 bbox_colors = [(164,120,87), (68,148,228), (93,97,209), (178,182,133), (88,159,106), 
@@ -250,3 +251,4 @@ elif source_type == 'picamera':
 if record: recorder.release()
 
 cv2.destroyAllWindows()
+
